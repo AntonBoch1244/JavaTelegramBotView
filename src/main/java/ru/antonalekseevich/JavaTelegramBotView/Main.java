@@ -6,8 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class main {
+public class Main {
 
+    public static Thread Manager;
     public static System.Logger LogManager = System.getLogger("BotView");
     public static Properties BotViewProperties = new Properties();
 
@@ -42,6 +43,7 @@ public class main {
 
     public static void main(String[] args) {
         loadProperties();
+        Manager = new Thread(new ClientManager(), "ClientManager");
         new BotView();
     }
 

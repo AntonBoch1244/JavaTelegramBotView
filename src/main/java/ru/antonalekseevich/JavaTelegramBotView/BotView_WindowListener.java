@@ -8,19 +8,20 @@ import java.io.IOException;
 public class BotView_WindowListener implements WindowListener {
     @Override
     public void windowOpened(WindowEvent windowEvent) {
+        Main.Manager.start();
         windowEvent.getWindow().setSize(
-                Integer.parseInt(main.BotViewProperties.get("window_width").toString()),
-                Integer.parseInt(main.BotViewProperties.get("window_height").toString())
+                Integer.parseInt(Main.BotViewProperties.get("window_width").toString()),
+                Integer.parseInt(Main.BotViewProperties.get("window_height").toString())
         );
     }
 
     @Override
     public void windowClosing(WindowEvent windowEvent) {
-        main.LogManager.log(System.Logger.Level.INFO, "Gracefully saving settings and exiting.");
+        Main.LogManager.log(System.Logger.Level.INFO, "Gracefully saving settings and exiting.");
 
         Dimension window_size = windowEvent.getWindow().getSize();
-        main.BotViewProperties.put("window_width", String.valueOf(window_size.width));
-        main.BotViewProperties.put("window_height", String.valueOf(window_size.height));
+        Main.BotViewProperties.put("window_width", String.valueOf(window_size.width));
+        Main.BotViewProperties.put("window_height", String.valueOf(window_size.height));
 
         windowEvent.getWindow().setVisible(false);
         windowEvent.getWindow().dispose();
@@ -29,12 +30,13 @@ public class BotView_WindowListener implements WindowListener {
     @Override
     public void windowClosed(WindowEvent windowEvent) {
         try {
-            main.BotViewProperties.store(new FileOutputStream("bot.properties"), "Saved state");
-            main.LogManager.log(System.Logger.Level.INFO, "Settings saved.");
+            Main.BotViewProperties.store(new FileOutputStream("bot.properties"), "Saved state");
+            Main.LogManager.log(System.Logger.Level.INFO, "Settings saved.");
         } catch (IOException IOError) {
-            main.LogManager.log(System.Logger.Level.ERROR, "Failed: ".concat(IOError.getLocalizedMessage()));
+            Main.LogManager.log(System.Logger.Level.ERROR, "Failed: ".concat(IOError.getLocalizedMessage()));
         }
-        main.LogManager.log(System.Logger.Level.INFO, "Closed.");
+        Main.Manager.stop();
+        Main.LogManager.log(System.Logger.Level.INFO, "Closed.");
     }
 
     @Override
