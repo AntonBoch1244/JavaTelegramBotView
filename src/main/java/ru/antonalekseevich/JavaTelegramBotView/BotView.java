@@ -7,6 +7,7 @@ public class BotView {
     Frame mainWindow;
 
     public BotView() {
+        main.LogManager.log(System.Logger.Level.DEBUG, "Setting up Window");
         this.mainWindow = new Frame();
         mainWindow.setSize(
                 Integer.parseInt(main.BotViewProperties.get("window_width").toString()),

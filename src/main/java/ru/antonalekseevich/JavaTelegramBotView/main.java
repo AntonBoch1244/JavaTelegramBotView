@@ -8,22 +8,36 @@ import java.util.Properties;
 
 public class main {
 
+    public static System.Logger LogManager = System.getLogger("BotView");
     public static Properties BotViewProperties = new Properties();
 
     static void loadProperties() {
         try {
+            LogManager.log(System.Logger.Level.INFO, "Try load file bot.properties.");
             BotViewProperties.load(new FileInputStream("bot.properties"));
-        } catch (FileNotFoundException filenotavailable) {
+        } catch (FileNotFoundException ignored) {
+            LogManager.log(System.Logger.Level.INFO, "File not found. Setting default config.");
+
+            // Window frame
             BotViewProperties.put("window_width", "1280");
             BotViewProperties.put("window_height", "720");
-            BotViewProperties.put("api_token", "HERE YOUR API_TOKEN");
-            BotViewProperties.put("other_server", false);
+
+            // Token for server
+            BotViewProperties.put("api_token", "REPLACE_WITH_YOUR_API_TOKEN");
+
+            // Server connection
+            BotViewProperties.put("other_server", "false");
             BotViewProperties.put("other_server_ip", "");
             BotViewProperties.put("other_server_port", "");
             try {
+                LogManager.log(System.Logger.Level.INFO, "Saving default config.");
                 BotViewProperties.store(new FileOutputStream("bot.properties"), "Bot settings");
-            } catch (IOException ignored) {}
-        } catch (IOException ignored) {}
+            } catch (IOException IOError) {
+                LogManager.log(System.Logger.Level.ERROR, "Failed: ".concat(IOError.getLocalizedMessage()));
+            }
+        } catch (IOException IOError) {
+            LogManager.log(System.Logger.Level.ERROR, "Failed: ".concat(IOError.getLocalizedMessage()));
+        }
     }
 
     public static void main(String[] args) {
