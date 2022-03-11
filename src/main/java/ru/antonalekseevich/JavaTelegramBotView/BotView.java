@@ -7,7 +7,9 @@ import java.awt.*;
 
 public class BotView {
 
-    Frame MainWindow;
+    public static Frame MainWindow;
+
+    GridLayout WindowLayout;
 
     Button GetMe;
 
@@ -15,16 +17,24 @@ public class BotView {
         Main.LogManager.log(System.Logger.Level.DEBUG, "Setting up Window");
         MainWindow = new Frame();
 
+        WindowLayout = new GridLayout(1, 3);
+
         GetMe = new Button();
+        GetMe.setName("Button_Request_GetMe");
         GetMe.addActionListener(new GetMe_ActionListener());
-        GetMe.setSize(80, 64);
         GetMe.setLabel("Get me.");
         GetMe.setVisible(true);
 
+        WindowLayout.addLayoutComponent("Button_Request_GetMe", GetMe);
+
+        MainWindow.setLayout(WindowLayout);
+
         MainWindow.add(GetMe);
 
+        MainWindow.doLayout();
+
         MainWindow.addWindowListener(new WindowListener());
-        MainWindow.setTitle("BotUserName".concat(": BotView")); // From received getMe name
+        MainWindow.setTitle("BotView"); // From received getMe name
         MainWindow.setVisible(true);
     }
 }
