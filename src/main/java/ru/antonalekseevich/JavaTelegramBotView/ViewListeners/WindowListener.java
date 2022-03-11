@@ -1,11 +1,13 @@
-package ru.antonalekseevich.JavaTelegramBotView;
+package ru.antonalekseevich.JavaTelegramBotView.ViewListeners;
+
+import ru.antonalekseevich.JavaTelegramBotView.Main;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class BotView_WindowListener implements WindowListener {
+public class WindowListener implements java.awt.event.WindowListener {
     @Override
     public void windowOpened(WindowEvent windowEvent) {
         Main.Manager.start();
