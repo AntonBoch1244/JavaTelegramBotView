@@ -1,7 +1,7 @@
 package ru.antonalekseevich.JavaTelegramBotView;
 
-import com.google.gson.JsonElement;
 import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.API_REQUEST;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Reply.ServerReply;
 
 import java.util.Stack;
 import java.util.UUID;
@@ -9,7 +9,7 @@ import java.util.UUID;
 public class ClientManager implements Runnable {
 
     public static Stack<API_REQUEST> queue = new Stack<>();
-    public static Stack<JsonElement> cache = new Stack<>();
+    public static Stack<ServerReply> cache = new Stack<>();
 
     ThreadGroup RequestersGroup = new ThreadGroup("Request");
     int Requesters;

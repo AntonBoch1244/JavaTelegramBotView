@@ -1,10 +1,11 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import ru.antonalekseevich.JavaTelegramBotView.ClientManager;
 import ru.antonalekseevich.JavaTelegramBotView.LockedStates;
 import ru.antonalekseevich.JavaTelegramBotView.Main;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Reply.ServerReply;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.TelegramType;
 
 import java.io.IOException;
 import java.net.URI;
@@ -15,7 +16,7 @@ import java.net.http.HttpResponse;
 
 public abstract class RequestSendMethod {
 
-    public void send(String method_name, boolean cacheable, JsonElement... POST_Variables) {
+    public void send(String method_name, boolean cacheable, TelegramType returnable, JsonElement... POST_Variables) {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest message = HttpRequest.newBuilder(
@@ -30,8 +31,8 @@ public abstract class RequestSendMethod {
             HttpResponse<String> reply_message = client.send(message, reply);
             switch (reply_message.statusCode()) {
                 case 200 -> {
-                    if (cacheable) ClientManager.cache.push(JsonParser.parseString(reply_message.body()));
-                    else LockedStates.UPDATE = JsonParser.parseString(reply_message.body());
+                    if (cacheable) ClientManager.cache.push(new ServerReply(reply_message.body(), returnable));
+                    else LockedStates.UPDATE = new ServerReply(reply_message.body(), returnable);
                 }
                 case 404 -> Main.LogManager.log(System.Logger.Level.ERROR, "Incorrect token/method not available.");
                 case 409 -> Main.LogManager.log(System.Logger.Level.INFO, "Too many requests.");

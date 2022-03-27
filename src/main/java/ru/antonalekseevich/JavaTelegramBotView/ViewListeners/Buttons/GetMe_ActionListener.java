@@ -2,6 +2,7 @@ package ru.antonalekseevich.JavaTelegramBotView.ViewListeners.Buttons;
 
 import ru.antonalekseevich.JavaTelegramBotView.BotView;
 import ru.antonalekseevich.JavaTelegramBotView.ClientManager;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.User;
 import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Request.getMe;
 import ru.antonalekseevich.JavaTelegramBotView.LockedStates;
 
@@ -17,6 +18,6 @@ public class GetMe_ActionListener implements ActionListener {
                 Thread.sleep(1000);
             } catch (InterruptedException ignore) {}
         } while (LockedStates.LOCKED);
-        BotView.MainWindow.setTitle(ClientManager.cache.peek().getAsJsonObject().get("result").getAsJsonObject().get("username").getAsString());
+        BotView.MainWindow.setTitle(((User)ClientManager.cache.peek().Reply_Result).getUsername());
     }
 }

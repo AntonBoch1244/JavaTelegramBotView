@@ -1,6 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView;
 
-import com.google.gson.JsonElement;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Reply.ServerReply;
 
 public class LockedStates {
 
@@ -8,7 +8,7 @@ public class LockedStates {
     public static boolean LOCKED = false;
 
     // Last update
-    public static JsonElement UPDATE;
+    public static ServerReply UPDATE;
 
     // For cache cleaning
     public static boolean CacheLocked = false;
