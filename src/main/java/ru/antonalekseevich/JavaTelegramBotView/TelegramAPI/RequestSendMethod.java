@@ -19,13 +19,7 @@ public abstract class RequestSendMethod {
     public void send(String method_name, boolean cacheable, TelegramType returnable, JsonElement... POST_Variables) {
         try {
             HttpClient client = HttpClient.newHttpClient();
-            HttpRequest message = HttpRequest.newBuilder(
-                    new URI(
-                            "https://api.telegram.org/bot"
-                                    .concat(Main.BotViewProperties.get("api_token").toString())
-                                    .concat("/").concat(method_name)
-                    )
-            ).build();
+            HttpRequest message = HttpRequest.newBuilder(new URI(Main.url.concat(method_name))).build();
             HttpResponse.BodyHandler<String> reply = HttpResponse.BodyHandlers.ofString();
             Main.LogManager.log(System.Logger.Level.INFO, "Sending request ".concat(method_name).concat(" to Telegram server."));
             HttpResponse<String> reply_message = client.send(message, reply);

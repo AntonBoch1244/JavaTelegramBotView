@@ -11,6 +11,7 @@ public class Main {
     public static Thread Manager;
     public static System.Logger LogManager = System.getLogger("BotView");
     public static Properties BotViewProperties = new Properties();
+    public static String url;
 
     static void loadProperties() {
         try {
@@ -28,8 +29,7 @@ public class Main {
 
             // Server connection
             BotViewProperties.put("other_server", "false");
-            BotViewProperties.put("other_server_ip", "");
-            BotViewProperties.put("other_server_port", "");
+            BotViewProperties.put("other_server_url", "");
             try {
                 LogManager.log(System.Logger.Level.INFO, "Saving default config.");
                 BotViewProperties.store(new FileOutputStream("bot.properties"), "Bot settings");
@@ -43,6 +43,11 @@ public class Main {
 
     public static void main(String[] args) {
         loadProperties();
+        if ((boolean) BotViewProperties.get("other_server"))
+            if (!(BotViewProperties.get("other_server_url")).equals(""))
+                url = BotViewProperties.get("other_server_url").toString().concat("/bot").concat(BotViewProperties.get("api_token").toString()).concat("/");
+        else
+            url = "https://api.telegram.org/bot".concat(BotViewProperties.get("api_token").toString()).concat("/");
         Manager = new Thread(new ClientManager(), "ClientManager");
         new BotView();
     }
