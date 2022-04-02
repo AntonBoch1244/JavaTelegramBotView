@@ -2,7 +2,7 @@ package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
 import com.google.gson.JsonObject;
 
-public class ChatMemberAdministrator extends ChatMember implements TelegramType {
+public class ChatMemberAdministrator extends ChatMember {
 
     String status;
     User user;
