@@ -1,6 +1,5 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import ru.antonalekseevich.JavaTelegramBotView.Main;
@@ -134,4 +133,46 @@ public class Update implements TelegramType {
         }
     }
 
+    @Override
+    public String toString() {
+        String returnable = "Update{";
+        returnable += "update_id=" + update_id;
+
+        if (message != null)
+            returnable += ", message=" + message;
+        if (edited_message != null)
+            returnable += ", edited_message=" + message;
+
+        if (channel_post != null)
+            returnable += ", channel_post=" + channel_post;
+        if (edited_channel_post != null)
+            returnable += ", edited_channel_post=" + edited_channel_post;
+
+        if (inline_query != null)
+            returnable += ", inline_query=" + inline_query;
+        if (chosen_inline_result != null)
+            returnable += ", chosen_inline_result=" + chosen_inline_result;
+        if (callback_query != null)
+            returnable += ", callback_query=" + callback_query;
+        if (shipping_query != null)
+            returnable += ", shipping_query=" + shipping_query;
+        if (pre_checkout_query != null)
+            returnable += ", pre_checkout_query=" + pre_checkout_query;
+
+        if (poll != null)
+            returnable += ", poll=" + poll;
+        if (poll_answer != null)
+            returnable += ", poll_answer=" + poll_answer;
+
+        if (my_chat_member != null)
+            returnable += ", my_chat_member=" + my_chat_member;
+        if (chat_member != null)
+            returnable += ", chat_member=" + chat_member;
+
+        if (chat_join_request != null)
+            returnable += ", chat_join_request=" + chat_join_request;
+
+        returnable += "}";
+        return returnable;
+    }
 }
