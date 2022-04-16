@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.ViewListeners.TextAreas;
 
-import ru.antonalekseevich.JavaTelegramBotView.BotView;
 import ru.antonalekseevich.JavaTelegramBotView.ClientManager;
-import ru.antonalekseevich.JavaTelegramBotView.LockedStates;
 import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Request.getUpdates;
 
 import java.awt.event.KeyEvent;
@@ -18,12 +16,8 @@ public class TextDebug_KeyListener implements KeyListener {
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         if (keyEvent.getExtendedKeyCode() == 116 /* F5 */) {
-            ClientManager.queue.push(new getUpdates());
-            try {
-                BotView.Debug.setText(ClientManager.cache.toString());
-                BotView.Debug.append(LockedStates.UPDATE.toString());
-            } catch (NullPointerException ignored) {
-            }
+            ClientManager.queue.push(new getUpdates(null));
+            ClientManager.results.pop();
         }
     }
 }

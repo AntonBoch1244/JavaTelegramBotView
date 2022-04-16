@@ -2,22 +2,25 @@ package ru.antonalekseevich.JavaTelegramBotView.ViewListeners.Buttons;
 
 import ru.antonalekseevich.JavaTelegramBotView.BotView;
 import ru.antonalekseevich.JavaTelegramBotView.ClientManager;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.User;
 import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Request.getMe;
-import ru.antonalekseevich.JavaTelegramBotView.LockedStates;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.RequestSendMethod;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.User;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.EmptyStackException;
 
 public class GetMe_ActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        ClientManager.queue.push(new getMe());
-        do {
+        RequestSendMethod getMe = new getMe(null);
+        ClientManager.queue.push(getMe);
+        while (true) {
             try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ignore) {}
-        } while (LockedStates.LOCKED);
-        BotView.MainWindow.setTitle(((User)ClientManager.cache.peek().Reply_Result).getUsername());
+                BotView.MainWindow.setTitle(((User) ((RequestSendMethod) ClientManager.results.pop()).Returnable).getUsername());
+                break;
+            } catch (EmptyStackException ignored) {}
+        }
+
     }
 }
