@@ -1,63 +1,48 @@
 package ru.antonalekseevich.JavaTelegramBotView;
 
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.API_REQUEST;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Reply.ServerReply;
+import com.google.gson.JsonParser;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Request.TelegramRequest;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.RequestSendMethod;
 
+import java.io.IOException;
+import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
+import java.util.EmptyStackException;
 import java.util.Stack;
-import java.util.UUID;
 
 public class ClientManager implements Runnable {
 
-    public static Stack<API_REQUEST> queue = new Stack<>();
-    public static Stack<ServerReply> cache = new Stack<>();
+    public static HttpClient client = HttpClient.newHttpClient();
 
-    ThreadGroup RequestersGroup = new ThreadGroup("Request");
-    int Requesters;
-    Thread[] RequestersThreads;
+    public static Stack<RequestSendMethod> queue;
+    public static Stack<TelegramRequest> results;
 
-    public void recalculateWorkersRequired() {
-        Requesters = ((queue.size() * 1.75) > (Short.MAX_VALUE * 2)) ? (Short.MAX_VALUE * 2)
-                : ((queue.size() == 0) ? 1 : (int) (queue.size() * 1.75));
-    }
-
-    public void removeDeadThreads() {
-        int alive = 0;
-        if (RequestersThreads == null) return;
-        for (Thread thread : RequestersThreads)
-            if (thread != null && thread.getState() != Thread.State.TERMINATED) alive++;
-        Thread[] aliveWorkerThreads = new Thread[alive];
-        alive = 0;
-        for (Thread workerThread : RequestersThreads)
-            if (workerThread != null && workerThread.getState() != Thread.State.TERMINATED)
-                aliveWorkerThreads[alive++] = workerThread;
-        RequestersThreads = aliveWorkerThreads.clone();
-        System.gc();
-    }
-
-    public void updateRequestersThreads() {
-        recalculateWorkersRequired();
-        removeDeadThreads();
-        if (RequestersThreads != null) if (RequestersThreads.length > Requesters) return;
-        Thread[] newRequestersThreads = new Thread[Requesters];
-        if (RequestersThreads != null) System.arraycopy(RequestersThreads, 0, newRequestersThreads, 0, RequestersThreads.length);
-        for (int i = newRequestersThreads.length - 1; i >= 0; i--)
-            if (newRequestersThreads[i] == null)
-                newRequestersThreads[i] = new Thread(RequestersGroup, new Requester(), String.format("Requester-%s", UUID.randomUUID()));
-        RequestersThreads = newRequestersThreads;
-        Runtime.getRuntime().runFinalization();
+    public static void EmptyQueueAndResults() {
+        queue = new Stack<>();
+        results = new Stack<>();
     }
 
     @Override
     public void run() {
-        try {
-            while (true) {
-                updateRequestersThreads();
-                for (Thread RequestersThread : RequestersThreads)
-                    if (RequestersThread != null && RequestersThread.getState() == Thread.State.NEW && !queue.empty())
-                        RequestersThread.start();
+        while (true) {
+            try {
+                RequestSendMethod request = queue.pop();
+                Main.LogManager.log(System.Logger.Level.INFO, "Processing request: " + request);
+                HttpResponse<String> reply_message = client.send(request.Request, request.Reply);
+
+                switch (reply_message.statusCode()) {
+                    case 404 -> Main.LogManager.log(System.Logger.Level.ERROR, "Incorrect token/method not available.");
+                    case 409 -> Main.LogManager.log(System.Logger.Level.INFO, "Too many requests.");
+                    default -> {
+                        Main.LogManager.log(System.Logger.Level.INFO, "Received code: " + reply_message.statusCode());
+                        request.parse(JsonParser.parseString(reply_message.body()).getAsJsonObject());
+                        ((TelegramRequest) request).ExtractTelegramType();
+                        results.push((TelegramRequest) request);
+                    }
+                }
+            } catch (ArrayIndexOutOfBoundsException | EmptyStackException ignore) {} catch (IOException | InterruptedException e) {
+                Main.LogManager.log(System.Logger.Level.ERROR, "Sending failed: ".concat(e.getLocalizedMessage()));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

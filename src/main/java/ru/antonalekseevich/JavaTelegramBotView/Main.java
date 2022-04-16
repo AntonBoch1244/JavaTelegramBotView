@@ -58,6 +58,7 @@ public class Main {
     public static void main(String[] args) {
         loadProperties();
         reloadURL();
+        ClientManager.EmptyQueueAndResults();
         Manager = new Thread(new ClientManager(), "ClientManager");
         new BotView();
     }

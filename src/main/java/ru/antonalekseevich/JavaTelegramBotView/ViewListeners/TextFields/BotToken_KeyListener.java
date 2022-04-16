@@ -19,6 +19,7 @@ public class BotToken_KeyListener implements KeyListener {
             case 10 /* Enter/Return */ -> {
                 Main.BotViewProperties.put("api_token", ((TextField) keyEvent.getSource()).getText());
                 Main.LogManager.log(System.Logger.Level.INFO, "API token successfully changed.");
+                Main.reloadURL();
             }
             case 27 /* Esc */ -> {
                 ((TextField) keyEvent.getSource()).setText(Main.BotViewProperties.getProperty("api_token"));

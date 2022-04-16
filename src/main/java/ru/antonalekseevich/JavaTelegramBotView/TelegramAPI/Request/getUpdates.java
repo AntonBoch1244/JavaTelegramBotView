@@ -1,13 +1,34 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Request;
 
 import com.google.gson.JsonElement;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.API_REQUEST;
+import com.google.gson.JsonObject;
 import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.RequestSendMethod;
 import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.Update;
 
-public class getUpdates extends RequestSendMethod implements API_REQUEST {
+import java.util.Stack;
+
+public class getUpdates extends RequestSendMethod implements TelegramRequest {
+    public getUpdates(JsonObject data) {
+        super("getUpdates", "GET", data);
+    }
+
     @Override
-    public void send() {
-        send("getUpdates", false, new Update(), (JsonElement) null);
+    public void ExtractTelegramType() {
+        Update returnable;
+        Returnable = new Stack<Update>();
+        for (JsonElement ResultIterator : Result.getAsJsonArray()) {
+            returnable = new Update();
+            returnable.ImportObject(ResultIterator.getAsJsonObject());
+            ((Stack<Update>)Returnable).push(returnable);
+        }
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return ((Stack<Update>) Returnable).toString();
+        } catch (NullPointerException ignore) {
+            return "getUpdates";
+        }
     }
 }

@@ -1,16 +1,26 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Request;
 
-import com.google.gson.JsonElement;
-import ru.antonalekseevich.JavaTelegramBotView.LockedStates;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.API_REQUEST;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.User;
+import com.google.gson.JsonObject;
 import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.RequestSendMethod;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.User;
 
-public class getMe extends RequestSendMethod implements API_REQUEST {
+public class getMe extends RequestSendMethod implements TelegramRequest {
+    public getMe(JsonObject data) {
+        super("getMe", "GET", data);
+    }
+
     @Override
-    public void send() {
-        LockedStates.LOCKED = true;
-        send("getMe", true, new User(), (JsonElement) null);
-        LockedStates.LOCKED = false;
+    public void ExtractTelegramType() {
+        Returnable = new User();
+        ((User) Returnable).ImportObject(Result.getAsJsonObject());
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return ((User) Returnable).toString();
+        } catch (NullPointerException ignore) {
+            return "getMe";
+        }
     }
 }
