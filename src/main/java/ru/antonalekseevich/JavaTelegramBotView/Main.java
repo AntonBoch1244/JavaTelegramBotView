@@ -28,7 +28,7 @@ public class Main {
             BotViewProperties.put("api_token", "REPLACE_WITH_YOUR_API_TOKEN");
 
             // Server connection
-            BotViewProperties.put("other_server", "false");
+            BotViewProperties.put("other_server", false);
             BotViewProperties.put("other_server_url", "");
             try {
                 LogManager.log(System.Logger.Level.INFO, "Saving default config.");
@@ -41,13 +41,23 @@ public class Main {
         }
     }
 
+    public static void reloadURL() {
+        if (Boolean.parseBoolean(BotViewProperties.get("other_server").toString()))
+            if (!(BotViewProperties.get("other_server_url")).equals("")) {
+                LogManager.log(System.Logger.Level.INFO, "Using other Telegram server.");
+                url = BotViewProperties.get("other_server_url").toString().concat("/bot").concat(BotViewProperties.get("api_token").toString()).concat("/");
+            } else {
+                LogManager.log(System.Logger.Level.INFO, "Property other_server_url is empty, considering use of official Telegram servers.");
+                url = "https://api.telegram.org/bot".concat(BotViewProperties.get("api_token").toString()).concat("/");
+            } else {
+            LogManager.log(System.Logger.Level.INFO, "Using official Telegram server.");
+            url = "https://api.telegram.org/bot".concat(BotViewProperties.get("api_token").toString()).concat("/");
+        }
+    }
+
     public static void main(String[] args) {
         loadProperties();
-        if ((boolean) BotViewProperties.get("other_server"))
-            if (!(BotViewProperties.get("other_server_url")).equals(""))
-                url = BotViewProperties.get("other_server_url").toString().concat("/bot").concat(BotViewProperties.get("api_token").toString()).concat("/");
-        else
-            url = "https://api.telegram.org/bot".concat(BotViewProperties.get("api_token").toString()).concat("/");
+        reloadURL();
         Manager = new Thread(new ClientManager(), "ClientManager");
         new BotView();
     }
