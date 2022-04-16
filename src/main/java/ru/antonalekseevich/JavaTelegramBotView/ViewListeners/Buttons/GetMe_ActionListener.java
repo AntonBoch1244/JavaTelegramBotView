@@ -17,7 +17,7 @@ public class GetMe_ActionListener implements ActionListener {
         ClientManager.queue.push(getMe);
         while (true) {
             try {
-                BotView.MainWindow.setTitle(((User) ((RequestSendMethod) ClientManager.results.pop()).Returnable).getUsername());
+                BotView.MainWindow.setTitle(((User) ((RequestSendMethod) ClientManager.results.pop()).Returnable).username);
                 break;
             } catch (EmptyStackException ignored) {}
         }

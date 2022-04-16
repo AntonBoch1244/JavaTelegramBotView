@@ -9,38 +9,12 @@ public class User implements TelegramType {
     String first_name;
 
     String last_name;
-    String username;
+    public String username;
     String language_code;
 
     Boolean can_join_groups;
     Boolean can_read_all_group_messages;
     Boolean supports_inline_queries;
-
-    public User() {}
-
-    public int getId() {
-        return id;
-    }
-
-    public boolean isIs_bot() {
-        return is_bot;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getLanguage_code() {
-        return language_code;
-    }
 
     @Override
     public void ImportObject(JsonObject object) {
