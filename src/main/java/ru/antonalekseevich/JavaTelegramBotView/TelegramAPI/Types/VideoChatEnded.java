@@ -2,19 +2,19 @@ package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
 import com.google.gson.JsonObject;
 
-public class VoiceChatScheduled implements TelegramType {
+public class VideoChatEnded implements TelegramType {
 
-    int start_date;
+    int duration;
 
     @Override
     public void ImportObject(JsonObject object) {
-        start_date = object.get("start_date").getAsInt();
+        duration = object.get("duration").getAsInt();
     }
 
     @Override
     public String toString() {
-        String returnable = "VoiceChatScheduled{";
-        returnable += "start_date=" + start_date;
+        String returnable = "VideoChatEnded{";
+        returnable += "duration=" + duration;
         returnable += "}";
         return returnable;
     }

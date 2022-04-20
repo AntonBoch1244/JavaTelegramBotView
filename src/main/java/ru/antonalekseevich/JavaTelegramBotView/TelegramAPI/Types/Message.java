@@ -61,10 +61,11 @@ public class Message implements TelegramType {
     String connected_website;
     PassportData passport_data;
     ProximityAlertTrigger proximity_alert_trigger;
-    VoiceChatScheduled voice_chat_scheduled;
-    VoiceChatStarted voice_chat_started;
-    VoiceChatEnded voice_chat_ended;
-    VoiceChatParticipantsInvited voice_chat_participants_invited;
+    VideoChatScheduled video_chat_scheduled;
+    VideoChatStarted video_chat_started;
+    VideoChatEnded video_chat_ended;
+    VideoChatParticipantsInvited video_chat_participants_invited;
+    WebAppData web_app_data;
     InlineKeyboardMarkup reply_markup;
 
     @Override
@@ -144,6 +145,12 @@ public class Message implements TelegramType {
         _object = object.get("text");
         if (_object != null)
             text = _object.getAsString();
+
+        _object = object.get("web_app_data");
+        if (_object != null) {
+            web_app_data = new WebAppData();
+            web_app_data.ImportObject(_object.getAsJsonObject());
+        }
 
         _object = object.get("entities");
         if (_object != null) {
@@ -334,23 +341,23 @@ public class Message implements TelegramType {
         }
         _object = object.get("voice_chat_scheduled");
         if (_object != null) {
-            voice_chat_scheduled = new VoiceChatScheduled();
-            voice_chat_scheduled.ImportObject(_object.getAsJsonObject());
+            video_chat_scheduled = new VideoChatScheduled();
+            video_chat_scheduled.ImportObject(_object.getAsJsonObject());
         }
         _object = object.get("voice_chat_started");
         if (_object != null) {
-            voice_chat_started = new VoiceChatStarted();
-            voice_chat_started.ImportObject(_object.getAsJsonObject());
+            video_chat_started = new VideoChatStarted();
+            video_chat_started.ImportObject(_object.getAsJsonObject());
         }
         _object = object.get("voice_chat_ended");
         if (_object != null) {
-            voice_chat_ended = new VoiceChatEnded();
-            voice_chat_ended.ImportObject(_object.getAsJsonObject());
+            video_chat_ended = new VideoChatEnded();
+            video_chat_ended.ImportObject(_object.getAsJsonObject());
         }
         _object = object.get("voice_chat_participants_invited");
         if (_object != null) {
-            voice_chat_participants_invited = new VoiceChatParticipantsInvited();
-            voice_chat_participants_invited.ImportObject(_object.getAsJsonObject());
+            video_chat_participants_invited = new VideoChatParticipantsInvited();
+            video_chat_participants_invited.ImportObject(_object.getAsJsonObject());
         }
         _object = object.get("reply_markup");
         if (_object != null) {
@@ -465,14 +472,16 @@ public class Message implements TelegramType {
             returnable += ", passport_data=" + passport_data;
         if (proximity_alert_trigger != null)
             returnable += ", proximity_alert_trigger=" + proximity_alert_trigger;
-        if (voice_chat_scheduled != null)
-            returnable += ", voice_chat_scheduled=" + voice_chat_scheduled;
-        if (voice_chat_started != null)
-            returnable += ", voice_chat_started=" + voice_chat_started;
-        if (voice_chat_ended != null)
-            returnable += ", voice_chat_ended=" + voice_chat_ended;
-        if (voice_chat_participants_invited != null)
-            returnable += ", voice_chat_participants_invited=" + voice_chat_participants_invited;
+        if (video_chat_scheduled != null)
+            returnable += ", video_chat_scheduled=" + video_chat_scheduled;
+        if (video_chat_started != null)
+            returnable += ", video_chat_started=" + video_chat_started;
+        if (video_chat_ended != null)
+            returnable += ", video_chat_ended=" + video_chat_ended;
+        if (video_chat_participants_invited != null)
+            returnable += ", video_chat_participants_invited=" + video_chat_participants_invited;
+        if (web_app_data != null)
+            returnable += ", web_app_data=" + web_app_data;
         if (reply_markup != null)
             returnable += ", reply_markup=" + reply_markup;
         returnable += "}";

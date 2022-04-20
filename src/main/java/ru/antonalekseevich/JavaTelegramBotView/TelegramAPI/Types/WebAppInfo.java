@@ -2,19 +2,19 @@ package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
 import com.google.gson.JsonObject;
 
-public class VoiceChatEnded implements TelegramType {
+public class WebAppInfo implements TelegramType {
 
-    int duration;
+    String url;
 
     @Override
     public void ImportObject(JsonObject object) {
-        duration = object.get("duration").getAsInt();
+        url = object.get("url").getAsString();
     }
 
     @Override
     public String toString() {
-        String returnable = "VoiceChatEnded{";
-        returnable += "duration=" + duration;
+        String returnable = "WebAppInfo{";
+        returnable += "url=" + url;
         returnable += "}";
         return returnable;
     }

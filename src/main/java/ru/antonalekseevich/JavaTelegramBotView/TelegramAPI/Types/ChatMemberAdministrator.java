@@ -12,7 +12,7 @@ public class ChatMemberAdministrator extends ChatMember {
     boolean is_anonymous;
     boolean can_manage_chat;
     boolean can_delete_messages;
-    boolean can_manage_voice_chats;
+    boolean can_manage_video_chats;
     boolean can_restrict_members; // also bans them
     boolean can_promote_members;
     boolean can_change_info;

@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 
 import java.util.Arrays;
 
-public class VoiceChatParticipantsInvited implements TelegramType {
+public class VideoChatParticipantsInvited implements TelegramType {
 
     User[] users;
 
@@ -22,7 +22,7 @@ public class VoiceChatParticipantsInvited implements TelegramType {
 
     @Override
     public String toString() {
-        String returnable = "VoiceChatParticipantsInvited{";
+        String returnable = "VideoChatParticipantsInvited{";
         returnable += "users=" + Arrays.toString(users);
         returnable += "}";
         return returnable;
