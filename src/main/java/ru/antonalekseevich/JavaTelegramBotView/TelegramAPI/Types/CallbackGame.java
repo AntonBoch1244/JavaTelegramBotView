@@ -39,7 +39,9 @@ public class CallbackGame implements TelegramType {
         }
 
 
-    }   @Override
+    }
+
+    @Override
     public String toString() {
         String returnable = "CallbackGame{";
         returnable += ", user_id=" + user_id;
