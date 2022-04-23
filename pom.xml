@@ -23,6 +23,16 @@
         </dependency>
     </dependencies>
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <mainClass>ru.antonalekseevich.JavaTelegramBotView.Main</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
         <sourceDirectory>src/main/java</sourceDirectory>
         <outputDirectory>build</outputDirectory>
     </build>

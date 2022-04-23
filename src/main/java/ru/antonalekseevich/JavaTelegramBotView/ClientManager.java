@@ -10,7 +10,7 @@ import java.net.http.HttpResponse;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
-public class ClientManager implements Runnable {
+public class ClientManager extends Thread implements Runnable {
 
     public static HttpClient client = HttpClient.newHttpClient();
 
@@ -24,25 +24,34 @@ public class ClientManager implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            try {
-                RequestSendMethod request = queue.pop();
-                Main.LogManager.log(System.Logger.Level.INFO, "Processing request: " + request);
-                HttpResponse<String> reply_message = client.send(request.Request, request.Reply);
+        try {
+            while (true) {
+                try {
+                    if (this.isInterrupted())
+                        break;
+                    RequestSendMethod request = queue.pop();
+                    Main.LogManager.log(System.Logger.Level.INFO, "Processing request: " + request);
+                    HttpResponse<String> reply_message = client.send(request.Request, request.Reply);
 
-                switch (reply_message.statusCode()) {
-                    case 404 -> Main.LogManager.log(System.Logger.Level.ERROR, "Incorrect token/method not available.");
-                    case 409 -> Main.LogManager.log(System.Logger.Level.INFO, "Too many requests.");
-                    default -> {
-                        Main.LogManager.log(System.Logger.Level.INFO, "Received code: " + reply_message.statusCode());
-                        request.parse(JsonParser.parseString(reply_message.body()).getAsJsonObject());
-                        ((TelegramRequest) request).ExtractTelegramType();
-                        results.push((TelegramRequest) request);
+                    switch (reply_message.statusCode()) {
+                        case 404 -> Main.LogManager.log(System.Logger.Level.ERROR, "Incorrect token/method not available.");
+                        case 409 -> Main.LogManager.log(System.Logger.Level.INFO, "Too many requests.");
+                        default -> {
+                            Main.LogManager.log(System.Logger.Level.INFO, "Received code: " + reply_message.statusCode());
+                            request.parse(JsonParser.parseString(reply_message.body()).getAsJsonObject());
+                            ((TelegramRequest) request).ExtractTelegramType();
+                            results.push((TelegramRequest) request);
+                        }
                     }
+                } catch (ArrayIndexOutOfBoundsException | EmptyStackException ignore) {
+                } catch (IOException e) {
+                    Main.LogManager.log(System.Logger.Level.ERROR, "Sending failed: ".concat(e.getLocalizedMessage()));
+                    throw new InterruptedException(e.getMessage());
                 }
-            } catch (ArrayIndexOutOfBoundsException | EmptyStackException ignore) {} catch (IOException | InterruptedException e) {
-                Main.LogManager.log(System.Logger.Level.ERROR, "Sending failed: ".concat(e.getLocalizedMessage()));
             }
+        } catch (InterruptedException e) {
+            Main.LogManager.log(System.Logger.Level.INFO, "Stopping processing queue cause: " + e.getLocalizedMessage());
+            EmptyQueueAndResults();
         }
     }
 }

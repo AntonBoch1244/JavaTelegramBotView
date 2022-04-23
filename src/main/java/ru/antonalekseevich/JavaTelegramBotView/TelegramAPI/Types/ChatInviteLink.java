@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class ChatInviteLink implements TelegramType {
+public class ChatInviteLink extends TelegramType {
 
     String invite_link;
     User creator;
@@ -15,7 +13,7 @@ public class ChatInviteLink implements TelegramType {
     int pending_join_request_count;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

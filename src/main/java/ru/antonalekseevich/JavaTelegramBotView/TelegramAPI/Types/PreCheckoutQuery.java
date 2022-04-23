@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class PreCheckoutQuery implements TelegramType {
+public class PreCheckoutQuery extends TelegramType {
 
     String id;
     User from;
@@ -13,7 +11,7 @@ public class PreCheckoutQuery implements TelegramType {
     OrderInfo order_info;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

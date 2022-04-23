@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class Poll implements TelegramType {
+public class Poll extends TelegramType {
 
     String id;
     String question;
@@ -12,14 +10,14 @@ public class Poll implements TelegramType {
     boolean is_anonymous;
     String type;
     boolean allows_multiple_answers;
-    int correct_option_id;
+    Integer correct_option_id;
     String explanation;
     MessageEntity[] explanation_entities;
-    int open_period;
-    int close_date; // unix timestamp
+    Integer open_period;
+    Integer close_date;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

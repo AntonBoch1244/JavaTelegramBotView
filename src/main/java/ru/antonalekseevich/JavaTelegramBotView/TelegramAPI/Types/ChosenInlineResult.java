@@ -1,15 +1,15 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class ChosenInlineResult implements TelegramType {
+public class ChosenInlineResult extends TelegramType {
 
     String result_id;
     User from;
-
+    Location location;
+    String inline_message_id;
+    String query;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class MessageEntity implements TelegramType {
+public class MessageEntity extends TelegramType {
 
     String type;
     int offset;
@@ -12,7 +10,7 @@ public class MessageEntity implements TelegramType {
     String language;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

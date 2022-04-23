@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class MaskPosition implements TelegramType {
+public class MaskPosition extends TelegramType {
 
     String point;
     float x_shift;
@@ -10,7 +8,7 @@ public class MaskPosition implements TelegramType {
     float scale;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

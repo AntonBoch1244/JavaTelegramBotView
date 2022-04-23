@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class ShippingAddress implements TelegramType {
+public class ShippingAddress extends TelegramType {
 
     String country_code;
     String state;
@@ -12,7 +10,7 @@ public class ShippingAddress implements TelegramType {
     String post_code;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

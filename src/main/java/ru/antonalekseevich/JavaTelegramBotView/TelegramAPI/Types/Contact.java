@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class Contact implements TelegramType {
+public class Contact extends TelegramType {
 
     String phone_number;
     String first_name;
@@ -11,7 +9,7 @@ public class Contact implements TelegramType {
     String vcard;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

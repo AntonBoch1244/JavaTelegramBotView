@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class Animation implements TelegramType {
+public class Animation extends TelegramType {
 
     String file_id;
     String file_unique_id;
@@ -12,10 +10,10 @@ public class Animation implements TelegramType {
     PhotoSize thumb;
     String file_name;
     String mime_type;
-    int file_size;
+    Integer file_size;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }
