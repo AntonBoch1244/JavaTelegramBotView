@@ -1,14 +1,12 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class PollOption implements TelegramType {
+public class PollOption extends TelegramType {
 
     String text;
     int voter_count;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

@@ -1,18 +1,15 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class PhotoSize implements TelegramType {
+public class PhotoSize extends TelegramType {
 
     String file_id;
     String file_unique_id;
-
     int width;
     int height;
-    int file_size;
+    Integer file_size;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

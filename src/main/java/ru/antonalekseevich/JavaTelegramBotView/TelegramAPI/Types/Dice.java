@@ -1,14 +1,12 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class Dice implements TelegramType {
+public class Dice extends TelegramType {
 
     String emoji;
     byte value;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

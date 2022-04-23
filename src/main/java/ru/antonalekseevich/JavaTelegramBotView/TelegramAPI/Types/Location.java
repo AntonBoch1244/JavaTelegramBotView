@@ -1,18 +1,16 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class Location implements TelegramType {
+public class Location extends TelegramType {
 
     float longitude;
     float latitude;
-    float horizontal_accuracy;
-    int live_period;
-    int heading;
-    int proximity_alert_radius;
+    Float horizontal_accuracy;
+    Integer live_period;
+    Integer heading;
+    Integer proximity_alert_radius;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

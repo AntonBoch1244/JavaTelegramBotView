@@ -1,5 +1,10 @@
 package ru.antonalekseevich.JavaTelegramBotView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.ChatMember;
+import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.GsonAdapters.ChatMemberAdapter;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,8 +13,9 @@ import java.util.Properties;
 
 public class Main {
 
+    public static Gson gson;
     public static Thread Manager;
-    public static System.Logger LogManager = System.getLogger("BotView");
+    public static final System.Logger LogManager = System.getLogger("BotView");
     public static Properties BotViewProperties = new Properties();
     public static String url;
 
@@ -28,7 +34,7 @@ public class Main {
             BotViewProperties.put("api_token", "REPLACE_WITH_YOUR_API_TOKEN");
 
             // Server connection
-            BotViewProperties.put("other_server", false);
+            BotViewProperties.put("other_server", "\"false\"");
             BotViewProperties.put("other_server_url", "");
             try {
                 LogManager.log(System.Logger.Level.INFO, "Saving default config.");
@@ -59,6 +65,9 @@ public class Main {
         loadProperties();
         reloadURL();
         ClientManager.EmptyQueueAndResults();
+        gson = new GsonBuilder()
+                .registerTypeAdapter(ChatMember.class, new ChatMemberAdapter())
+                .create();
         Manager = new Thread(new ClientManager(), "ClientManager");
         new BotView();
     }

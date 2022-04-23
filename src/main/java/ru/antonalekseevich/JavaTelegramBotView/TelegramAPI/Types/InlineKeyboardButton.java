@@ -1,9 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-public class InlineKeyboardButton implements TelegramType {
+public class InlineKeyboardButton extends TelegramType {
 
     String text;
     String url;
@@ -16,61 +13,7 @@ public class InlineKeyboardButton implements TelegramType {
     Boolean pay;
 
     @Override
-    public void ImportObject(JsonObject object) {
-        text = object.get("text").getAsString();
-        JsonElement _object = object.get("url");
-        if (_object != null)
-            url = _object.getAsString();
-        _object = object.get("login_url");
-        if (_object != null) {
-            login_url = new LoginUrl();
-            login_url.ImportObject(_object.getAsJsonObject());
-        }
-        _object = object.get("callback_data");
-        if (_object != null)
-            callback_data = _object.getAsString();
-        _object = object.get("web_app");
-        if (_object != null) {
-            web_app = new WebAppInfo();
-            web_app.ImportObject(_object.getAsJsonObject());
-        }
-        _object = object.get("switch_inline_query");
-        if (_object != null)
-            switch_inline_query = _object.getAsString();
-        _object = object.get("switch_inline_query_current_chat");
-        if (_object != null)
-            switch_inline_query_current_chat = _object.getAsString();
-        _object = object.get("callback_game");
-        if (_object != null) {
-            callback_game = new CallbackGame();
-            callback_game.ImportObject(_object.getAsJsonObject());
-        }
-        _object = object.get("pay");
-        if (_object != null)
-            pay = _object.getAsBoolean();
-    }
-
-    @Override
     public String toString() {
-        String returnable = "InlineKeyboardButton{";
-        returnable += "text=" + text;
-        if (url != null)
-            returnable += ", url=" + url;
-        if (login_url != null)
-            returnable += ", login_url=" + login_url;
-        if (callback_data != null)
-            returnable += ", callback_data=" + callback_data;
-        if (web_app != null)
-            returnable += ", web_app=" + web_app;
-        if (switch_inline_query != null)
-            returnable += ", switch_inline_query=" + switch_inline_query;
-        if (switch_inline_query_current_chat != null)
-            returnable += ", switch_inline_query_current_chat=" + switch_inline_query_current_chat;
-        if (callback_game != null)
-            returnable += ", callback_game=" + callback_game;
-        if (pay != null)
-            returnable += ", pay=" + pay;
-        returnable += "}";
-        return returnable;
+        return toStringHelper(this);
     }
 }

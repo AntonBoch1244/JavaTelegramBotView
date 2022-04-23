@@ -1,23 +1,21 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class Sticker implements TelegramType {
+public class Sticker extends TelegramType {
 
     String file_id;
     String file_unique_id;
     int width;
     int height;
-    boolean is_animated; // tgz file
-    boolean is_video; // webm file
+    boolean is_animated;
+    boolean is_video;
     PhotoSize thumb;
     String emoji;
     String set_name;
     MaskPosition mask_position;
-    int file_size;
+    Integer file_size;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

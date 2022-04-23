@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class Voice implements TelegramType {
+public class Voice extends TelegramType {
 
     String file_id;
     String file_unique_id;
@@ -11,7 +9,7 @@ public class Voice implements TelegramType {
     int file_size;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

@@ -1,3 +1,8 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-public abstract class ChatMember implements TelegramType {}
+public class ChatMember extends TelegramType {
+
+    String status;
+    User user;
+
+}

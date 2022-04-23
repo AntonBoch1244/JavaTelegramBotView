@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class Venue implements TelegramType {
+public class Venue extends TelegramType {
 
     Location location;
     String title;
@@ -13,7 +11,7 @@ public class Venue implements TelegramType {
     String google_place_type;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

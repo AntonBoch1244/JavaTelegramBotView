@@ -1,14 +1,12 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class ChatLocation implements TelegramType {
+public class ChatLocation extends TelegramType {
 
     Location location;
     String address;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }

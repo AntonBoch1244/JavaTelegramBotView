@@ -1,8 +1,6 @@
 package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types;
 
-import com.google.gson.JsonObject;
-
-public class Video implements TelegramType {
+public class Video extends TelegramType {
 
     String file_id;
     String file_unique_id;
@@ -15,7 +13,7 @@ public class Video implements TelegramType {
     int file_size;
 
     @Override
-    public void ImportObject(JsonObject object) {
-
+    public String toString() {
+        return toStringHelper(this);
     }
 }
