@@ -1,26 +1,28 @@
 package ru.antonalekseevich.JavaTelegramBotView.ViewListeners.Buttons;
 
-import ru.antonalekseevich.JavaTelegramBotView.BotView;
-import ru.antonalekseevich.JavaTelegramBotView.ClientManager;
+import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Event.EUpdateWindowTitle;
+import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Event.Event;
+import ru.antonalekseevich.JavaTelegramBotView.EventManagement.EventsProcessor;
+import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Handler.Handler;
 import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Request.getMe;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.RequestSendMethod;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.User;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EmptyStackException;
 
 public class GetMe_ActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        RequestSendMethod getMe = new getMe(null);
-        ClientManager.queue.push(getMe);
-        while (true) {
-            try {
-                BotView.MainWindow.setTitle(((User) ((RequestSendMethod) ClientManager.results.pop()).Returnable).username);
-                break;
-            } catch (EmptyStackException ignored) {}
-        }
-
+        EventsProcessor ep = new EventsProcessor();
+        Event event = new EUpdateWindowTitle();
+        event.addHandler(new Handler() {
+            @Override
+            public void handle() {
+                try {
+                    event.getContainer().setResult(new getMe(null));
+                } catch (IllegalAccessException ignored) {}
+            }
+        });
+        ep.newEvent(event);
+        ep.start();
     }
 }

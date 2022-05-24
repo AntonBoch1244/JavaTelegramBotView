@@ -10,7 +10,6 @@ import java.io.IOException;
 public class WindowListener implements java.awt.event.WindowListener {
     @Override
     public void windowOpened(WindowEvent windowEvent) {
-        Main.Manager.start();
         windowEvent.getWindow().setSize(
                 Integer.parseInt(Main.BotViewProperties.get("window_width").toString()),
                 Integer.parseInt(Main.BotViewProperties.get("window_height").toString())
@@ -37,7 +36,6 @@ public class WindowListener implements java.awt.event.WindowListener {
         } catch (IOException IOError) {
             Main.LogManager.log(System.Logger.Level.ERROR, "Failed: ".concat(IOError.getLocalizedMessage()));
         }
-        Main.Manager.stop();
         Main.LogManager.log(System.Logger.Level.INFO, "Closed.");
     }
 

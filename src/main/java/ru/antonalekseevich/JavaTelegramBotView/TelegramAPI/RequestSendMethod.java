@@ -3,7 +3,6 @@ package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import ru.antonalekseevich.JavaTelegramBotView.Main;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.TelegramType;
 
 import java.net.URI;
 import java.net.http.HttpRequest;

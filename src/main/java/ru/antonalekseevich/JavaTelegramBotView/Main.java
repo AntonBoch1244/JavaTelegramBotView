@@ -9,12 +9,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.http.HttpClient;
 import java.util.Properties;
 
 public class Main {
 
     public static Gson gson;
-    public static Thread Manager;
+    public static HttpClient WebClient = HttpClient.newHttpClient();
     public static final System.Logger LogManager = System.getLogger("BotView");
     public static Properties BotViewProperties = new Properties();
     public static String url;
@@ -64,11 +65,9 @@ public class Main {
     public static void main(String[] args) {
         loadProperties();
         reloadURL();
-        ClientManager.EmptyQueueAndResults();
         gson = new GsonBuilder()
                 .registerTypeAdapter(ChatMember.class, new ChatMemberAdapter())
                 .create();
-        Manager = new Thread(new ClientManager(), "ClientManager");
         new BotView();
     }
 
