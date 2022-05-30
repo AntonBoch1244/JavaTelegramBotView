@@ -1,4 +1,4 @@
-package ru.antonalekseevich.JavaTelegramBotView.TelegramAPI;
+package ru.antonalekseevich.JavaTelegramBotView.BotAPI.Request;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,16 +8,19 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public abstract class RequestSendMethod {
+public abstract class TelegramRequest {
 
     public HttpRequest Request;
     public HttpResponse.BodyHandler<String> Reply;
     public JsonElement Result;
     public Object Returnable;
 
-    protected RequestSendMethod(String name, String http_method, JsonObject data) {
-        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder();
-        HttpRequest.BodyPublisher request_data = HttpRequest.BodyPublishers.ofString(String.valueOf(data));
+    protected TelegramRequest(String name, String http_method, JsonObject data) {
+        HttpRequest.Builder requestBuilder;
+        HttpRequest.BodyPublisher request_data;
+
+        requestBuilder = HttpRequest.newBuilder();
+        request_data = HttpRequest.BodyPublishers.ofString(String.valueOf(data));
 
         requestBuilder.uri(URI.create(Main.url.concat(name)));
 
@@ -33,4 +36,6 @@ public abstract class RequestSendMethod {
             Result = reply_message.get("result");
         }
     }
+
+    public abstract void extractTelegramType();
 }

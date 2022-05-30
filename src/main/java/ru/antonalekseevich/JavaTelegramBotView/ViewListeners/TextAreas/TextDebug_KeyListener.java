@@ -1,13 +1,13 @@
 package ru.antonalekseevich.JavaTelegramBotView.ViewListeners.TextAreas;
 
+import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Request.TelegramRequest;
 import ru.antonalekseevich.JavaTelegramBotView.BotView;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Event.EEmpty;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Event.Event;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.EventsProcessor;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Handler.HDoNetworkRequest;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Handler.Handler;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Request.getUpdates;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.RequestSendMethod;
+import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Request.GetUpdates;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -27,7 +27,9 @@ public class TextDebug_KeyListener implements KeyListener {
             event.addHandler(new Handler() {
                 @Override
                 public void handle() {
-                    BotView.Debug.append((((RequestSendMethod)event.getContainer().getResult()).Returnable.toString()));
+                    TelegramRequest request = (TelegramRequest) event.getContainer().getResult();
+                    String text = request.Returnable.toString();
+                    BotView.Debug.append(text);
                 }
             });
             event.addHandler(new HDoNetworkRequest());
@@ -35,7 +37,7 @@ public class TextDebug_KeyListener implements KeyListener {
                 @Override
                 public void handle() {
                     try {
-                        event.getContainer().setResult(new getUpdates(null));
+                        event.getContainer().setResult(new GetUpdates(null));
                     } catch (IllegalAccessException ignored) {}
                 }
             });
