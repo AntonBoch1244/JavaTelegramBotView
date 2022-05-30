@@ -3,20 +3,20 @@ package ru.antonalekseevich.JavaTelegramBotView.EventManagement;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Event.Event;
 import java.util.Stack;
 
-public class EventsProcessor extends Thread {
+public class EventProcessor extends Thread {
 
     protected Stack<Event> events = new Stack<>();
     protected volatile boolean lock = false;
 
-    public void LockThread() {
+    public void lockThread() {
         lock = true;
     }
 
-    public void UnlockThread() {
+    public void unlockThread() {
         lock = false;
     }
 
-    public void newEvent(Event event) {
+    public void pushNewEvent(Event event) {
         events.push(event);
     }
 
@@ -26,7 +26,7 @@ public class EventsProcessor extends Thread {
         while (!events.isEmpty()) {
             event = events.pop();
             event.attachProcessor(this);
-            if (event.getLock()) LockThread();
+            if (event.getLock()) lockThread();
             event.start();
             while (lock) Thread.onSpinWait(); // Await unlock
             try {

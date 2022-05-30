@@ -4,7 +4,7 @@ import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Request.TelegramRequest;
 import ru.antonalekseevich.JavaTelegramBotView.BotView;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Event.EEmpty;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Event.Event;
-import ru.antonalekseevich.JavaTelegramBotView.EventManagement.EventsProcessor;
+import ru.antonalekseevich.JavaTelegramBotView.EventManagement.EventProcessor;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Handler.HDoNetworkRequest;
 import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Handler.Handler;
 import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Request.GetUpdates;
@@ -22,7 +22,7 @@ public class TextDebug_KeyListener implements KeyListener {
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         if (keyEvent.getExtendedKeyCode() == 116 /* F5 */) {
-            EventsProcessor ep = new EventsProcessor();
+            EventProcessor ep = new EventProcessor();
             Event event = new EEmpty();
             event.addHandler(new Handler() {
                 @Override
@@ -41,7 +41,7 @@ public class TextDebug_KeyListener implements KeyListener {
                     } catch (IllegalAccessException ignored) {}
                 }
             });
-            ep.newEvent(event);
+            ep.pushNewEvent(event);
             ep.start();
         }
     }
