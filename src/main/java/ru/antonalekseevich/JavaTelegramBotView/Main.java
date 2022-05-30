@@ -2,8 +2,8 @@ package ru.antonalekseevich.JavaTelegramBotView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.ChatMember;
-import ru.antonalekseevich.JavaTelegramBotView.TelegramAPI.Types.GsonAdapters.ChatMemberAdapter;
+import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Types.ChatMember;
+import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Types.GsonAdapters.ChatMemberAdapter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
