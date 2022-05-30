@@ -53,7 +53,7 @@ public class BotView {
         MainWindow.doLayout();
 
         MainWindow.addWindowListener(new WindowListener());
-        MainWindow.setTitle("BotView"); // From received getMe name
+        MainWindow.setTitle("BotView");
         MainWindow.setVisible(true);
     }
 }
