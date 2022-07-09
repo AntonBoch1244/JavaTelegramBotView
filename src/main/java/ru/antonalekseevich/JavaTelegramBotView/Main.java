@@ -3,7 +3,10 @@ package ru.antonalekseevich.JavaTelegramBotView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Types.ChatMember;
+import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Types.GsonAdapters.BotCommandScopeAdapter;
 import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Types.GsonAdapters.ChatMemberAdapter;
+import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Types.GsonAdapters.InputMediaAdapter;
+import ru.antonalekseevich.JavaTelegramBotView.BotAPI.Types.GsonAdapters.MenuButtonAdapter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -66,7 +69,10 @@ public class Main {
         loadProperties();
         reloadURL();
         gson = new GsonBuilder()
+                .registerTypeAdapter(BotCommandScopeAdapter.class, new BotCommandScopeAdapter())
                 .registerTypeAdapter(ChatMember.class, new ChatMemberAdapter())
+                .registerTypeAdapter(InputMediaAdapter.class, new InputMediaAdapter())
+                .registerTypeAdapter(MenuButtonAdapter.class, new MenuButtonAdapter())
                 .create();
         new BotView();
     }

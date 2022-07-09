@@ -15,8 +15,10 @@ public class GetUpdates extends TelegramRequest {
     @Override
     public void extractTelegramType() {
         Returnable = new Stack<Update>();
-        for (JsonElement ResultIterator : Result.getAsJsonArray()) {
-            ((Stack<Update>)Returnable).push(Main.gson.fromJson(ResultIterator, Update.class));
-        }
+        try {
+            for (JsonElement ResultIterator : Result.getAsJsonArray()) {
+                ((Stack<Update>) Returnable).push(Main.gson.fromJson(ResultIterator, Update.class));
+            }
+        } catch (NullPointerException ignored) {}
     }
 }

@@ -11,10 +11,12 @@ public class Chat extends TelegramType {
     ChatPhoto chat_photo;
     String bio;
     Boolean has_private_forwards;
+    Boolean join_to_send_messages; // Added in recent update
+    Boolean join_by_request; // Added in recent update
     String description;
     String invite_link;
-    Message private_message;
-    ChatPermissions chat_permissions;
+    Message pinned_message;
+    ChatPermissions permissions;
     Integer slow_mode_delay;
     Integer message_auto_delete_time;
     Boolean has_protected_content;

@@ -6,7 +6,7 @@ import ru.antonalekseevich.JavaTelegramBotView.EventManagement.Handler.HSetWindo
 public class EUpdateWindowTitle extends Event {
 
     public EUpdateWindowTitle() {
-        super(false, new EventResultContainer<>());
+        super(false, new ResultContainer<>());
         addHandler(new HSetWindowTitle());
         addHandler(new HDoNetworkRequest());
     }
